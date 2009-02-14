@@ -7,7 +7,7 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <klocale.h>
-#include <kpluginfactory.h>
+#include <kpluginfactory.h>                     
 #include <kpluginloader.h>
 #include <kaboutdata.h>
 #include <kshell.h>
@@ -35,18 +35,32 @@ KatePluginGateView::KatePluginGateView( Kate::MainWindow *mainWin )
 {
   setComponentData( KatePluginGateFactory::componentData() );
   setXMLFile( "plugins/kategate/ui.rc" );
+  //init
   KAction *a = actionCollection()->addAction( "git_init" );
   a->setText( i18n("Init") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitInit() ) );
+  //push remote 
+  a = actionCollection()->addAction( "git_push" );
+  a->setText( i18n("Push") );
+  connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitPush() ) );
+ //checkout
+  a = actionCollection()->addAction( "git_checkout" );
+  a->setText( i18n("Checkout") );
+  connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitCheckout() ) );
+  
+  //add remote repository 
   a = actionCollection()->addAction( "git_add_respository" );
   a->setText( i18n("Add remote repository") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitRemoteAddRepo() ) );
+ //add file
   a = actionCollection()->addAction( "git_add_file" );
   a->setText( i18n("Add file") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitAdd() ) );
+ //commit
   a = actionCollection()->addAction( "git_commit" );
   a->setText( i18n("Commit") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitCommit() ) );
+//commit -a
  a = actionCollection()->addAction( "git_commit_all" );
   a->setText( i18n("Commit All changed files") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitCommitAll() ) );
@@ -72,13 +86,22 @@ KatePluginGateView::~KatePluginGateView()
 
 
 
-void KatePluginGateView::gitInit()
+void KatePluginGateView::gitPush()
 {
   // comando push, utilizando origin como repositorio y head, lo que le indica a git 
   // que utilice el branch actual
   m_console->sendInput( KShell::quoteArg("git") + "  push origin HEAD" + '\n' ); 
 }
 
+void KatePluginGateView::gitCheckout()
+{
+bool ok;
+  QString res = KInputDialog::getText(i18n("Checkout"),
+		i18n("Branch to checkout"), QString::null,&ok,0,0,0,QString::null);
+ if ( ok ){
+    m_console->sendInput(  "git checkout " + KShell::quoteArg(res) +  '\n' );
+ }
+}
 
 void KatePluginGateView::gitInit()
 {
@@ -115,14 +138,7 @@ void  KatePluginGateView::gitCommitAll()
 {
   bool ok;
   QString res = KInputDialog::getText(i18n("Commit  message"),
-		i18n("Mesage"),
-		QString::null,
-		&ok,
-		0,
-		0,
-		0,
-		QString::null
-	);
+		i18n("Mesage"), QString::null,&ok,0,0,0,QString::null);
  if ( ok ){
     m_console->sendInput(  "git commit -a -m" + KShell::quoteArg(res) +  '\n' );
  }
@@ -130,7 +146,7 @@ void  KatePluginGateView::gitCommitAll()
 
 void KatePluginGateView::gitAddTag()
 {
-  m_console->sendInput("git add " + KShell::quoteArg(mainWindow()->activeView()->document()->url().path() ) + '\n' );
+  m_console->sendInput("git add " + KShell::quoteArg(mainWindow()->activeView()->document()->url().path()) + '\n' );
 }
 /*
 void KatePluginGateView::slotInsertHello()
