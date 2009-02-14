@@ -44,10 +44,12 @@ KatePluginGateView::KatePluginGateView( Kate::MainWindow *mainWin )
   a = actionCollection()->addAction( "git_add_file" );
   a->setText( i18n("Add file") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitAdd() ) );
-   a = actionCollection()->addAction( "git_commit" );
+  a = actionCollection()->addAction( "git_commit" );
   a->setText( i18n("Commit") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitCommit() ) );
- 
+ a = actionCollection()->addAction( "git_commit_all" );
+  a->setText( i18n("Commit All changed files") );
+  connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitCommitAll() ) );
 
 
 
@@ -99,7 +101,7 @@ void KatePluginGateView::gitAdd()
 void  KatePluginGateView::gitCommit()
 {
   bool ok;
-  QString res = KInputDialog::getText(i18n("What i changed"),
+  QString res = KInputDialog::getText(i18n("Commit message"),
 		i18n("Mesage"),
 		QString::null,
 		&ok,
@@ -113,11 +115,28 @@ void  KatePluginGateView::gitCommit()
  }
 }
 
+void  KatePluginGateView::gitCommitAll()
+{
+  bool ok;
+  QString res = KInputDialog::getText(i18n("Commit  message"),
+		i18n("Mesage"),
+		QString::null,
+		&ok,
+		0,
+		0,
+		0,
+		QString::null
+	);
+ if ( ok ){
+    m_console->sendInput(  "git commit -a -m" + KShell::quoteArg(res) +  '\n' );
+ }
+}
+
 void KatePluginGateView::gitAddTag()
 {
   m_console->sendInput("git add " + KShell::quoteArg(mainWindow()->activeView()->document()->url().path() ) + '\n' );
 }
-
+/*
 void KatePluginGateView::slotInsertHello()
 {
   if (!mainWindow()) {
@@ -130,7 +149,7 @@ void KatePluginGateView::slotInsertHello()
     kv->insertText( "Hello World" );
   }
 }
-
+*/
 void KatePluginGateView::readSessionConfig( KConfigBase* config, const QString& groupPrefix )
 {
   // If you have session-dependant settings, load them here.

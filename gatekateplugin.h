@@ -41,12 +41,12 @@ class KatePluginGateView : public Kate::PluginView, public KXMLGUIClient
     virtual void readSessionConfig( KConfigBase* config, const QString& groupPrefix );
     virtual void writeSessionConfig( KConfigBase* config, const QString& groupPrefix );
 
-  public slots:
-    void slotInsertHello();
+  public slots:  
     void gitInit();
     void gitRemoteAddRepo();
     void gitAdd();
     void gitCommit();
+    void gitCommitAll();
     void gitAddTag();
   private:
    KateConsole *m_console;

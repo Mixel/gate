@@ -11,6 +11,7 @@
       <Action name="git_init" />
       <Action name="git_add_file" />
       <Action name="git_commit" />
+      <Action name="git_commit_all" />
       <Action name="git_add_tag" />
       <DefineGroup name="git_local_commands" />
       <Separator />
