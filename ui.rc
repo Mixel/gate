@@ -2,14 +2,23 @@
 <kpartplugin name="gate" library="libkategateplugin" version="1">
 <MenuBar>
  <Menu name="git"><text>Git</text>
-      <Action name="git_init" />
+      
       <Action name="git_add_respository" />
-      <Action name="git_push_remote" /> 
-      <DefineGroup name="git_remote_actions" />
+      <Action name="git_push" /> 
+      <Action name="git_clone" /> 
+      <DefineGroup name="git_remote_actions" />       
       <Separator />
-      <DefineGroup name="git_remote_actions" />
-      <Separator />
+      <Action name="git_init" />
       <Action name="git_add_file" />
+      <Action name="git_commit" />
+      <Action name="git_add_tag" />
+      <DefineGroup name="git_local_commands" />
+      <Separator />
+      <Action name="git_checkout" />
+      <Action name="git_branch" />
+      <Action name="git_merge" />
+      <Action name="git_rebase" />
+      <DefineGroup name="git_branching_commands" />
  </Menu>
 </MenuBar>
 </kpartplugin>

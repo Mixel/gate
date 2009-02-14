@@ -46,6 +46,8 @@ class KatePluginGateView : public Kate::PluginView, public KXMLGUIClient
     void gitInit();
     void gitRemoteAddRepo();
     void gitAdd();
+    void gitCommit();
+    void gitAddTag();
   private:
    KateConsole *m_console;
 };

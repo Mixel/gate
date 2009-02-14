@@ -44,7 +44,18 @@ KatePluginGateView::KatePluginGateView( Kate::MainWindow *mainWin )
   a = actionCollection()->addAction( "git_add_file" );
   a->setText( i18n("Add file") );
   connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitAdd() ) );
+   a = actionCollection()->addAction( "git_commit" );
+  a->setText( i18n("Commit") );
+  connect( a, SIGNAL( triggered(bool) ), this, SLOT( gitCommit() ) );
+ 
+
+
+
+
+
   mainWindow()->guiFactory()->addClient( this );
+
+  
 
   QWidget *toolview = mainWin->createToolView ("kate_private_plugin_gateplugin", Kate::MainWindow::Bottom, SmallIcon("utilities-terminal"), i18n("Gate"));
   mainWin->hideToolView(toolview);
@@ -83,8 +94,30 @@ void  KatePluginGateView::gitRemoteAddRepo()
 void KatePluginGateView::gitAdd()
 {
   m_console->sendInput("git add " + KShell::quoteArg(mainWindow()->activeView()->document()->url().path() ) + '\n' );
- 
 }
+
+void  KatePluginGateView::gitCommit()
+{
+  bool ok;
+  QString res = KInputDialog::getText(i18n("What i changed"),
+		i18n("Mesage"),
+		QString::null,
+		&ok,
+		0,
+		0,
+		0,
+		QString::null
+	);
+ if ( ok ){
+    m_console->sendInput(  "git commit -m" + KShell::quoteArg(res) +  '\n' );
+ }
+}
+
+void KatePluginGateView::gitAddTag()
+{
+  m_console->sendInput("git add " + KShell::quoteArg(mainWindow()->activeView()->document()->url().path() ) + '\n' );
+}
+
 void KatePluginGateView::slotInsertHello()
 {
   if (!mainWindow()) {
