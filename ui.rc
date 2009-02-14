@@ -1,0 +1,15 @@
+<!DOCTYPE kpartgui>
+<kpartplugin name="gate" library="libkategateplugin" version="1">
+<MenuBar>
+ <Menu name="git"><text>Git</text>
+      <Action name="git_init" />
+      <Action name="git_add_respository" />
+      <Action name="git_push_remote" /> 
+      <DefineGroup name="git_remote_actions" />
+      <Separator />
+      <DefineGroup name="git_remote_actions" />
+      <Separator />
+      <Action name="git_add_file" />
+ </Menu>
+</MenuBar>
+</kpartplugin>

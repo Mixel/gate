@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Kate/Plugin
+X-KDE-Library=kategateplugin
+X-Kate-Version=2.9
+Name=Gate -- Git -- kate integration
+Comment=Git support in Kate
