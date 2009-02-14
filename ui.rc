@@ -16,7 +16,7 @@
       <DefineGroup name="git_local_commands" />
       <Separator />
       <Action name="git_checkout" />
-      <Action name="git_branch" />
+      <Action name="git_add_branch" />
       <Action name="git_merge" />
       <Action name="git_rebase" />
       <DefineGroup name="git_branching_commands" />

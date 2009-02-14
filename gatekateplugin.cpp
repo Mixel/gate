@@ -70,6 +70,16 @@ KatePluginGateView::~KatePluginGateView()
   mainWindow()->guiFactory()->removeClient( this );
 }
 
+
+
+void KatePluginGateView::gitInit()
+{
+  // comando push, utilizando origin como repositorio y head, lo que le indica a git 
+  // que utilice el branch actual
+  m_console->sendInput( KShell::quoteArg("git") + "  push origin HEAD" + '\n' ); 
+}
+
+
 void KatePluginGateView::gitInit()
 {
   // creamos el repositorio
@@ -80,14 +90,7 @@ void  KatePluginGateView::gitRemoteAddRepo()
 {
   bool ok;
   QString res = KInputDialog::getText(i18n("add repository to git"),
-		i18n("url"),
-		QString::null,
-		&ok,
-		0,
-		0,
-		0,
-		QString::null
-	);
+		i18n("url"),QString::null,&ok,0,0,0,QString::null);
  if ( ok ){
     m_console->sendInput(  "git remote add origin " + KShell::quoteArg(res) +  '\n' );
  }
@@ -102,14 +105,7 @@ void  KatePluginGateView::gitCommit()
 {
   bool ok;
   QString res = KInputDialog::getText(i18n("Commit message"),
-		i18n("Mesage"),
-		QString::null,
-		&ok,
-		0,
-		0,
-		0,
-		QString::null
-	);
+		i18n("Mesage"), QString::null,&ok,0,0,0,QString::null);
  if ( ok ){
     m_console->sendInput(  "git commit -m" + KShell::quoteArg(res) +  '\n' );
  }
